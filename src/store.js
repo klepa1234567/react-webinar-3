@@ -4,6 +4,7 @@
 class Store {
   constructor(initState = {}) {
     this.state = initState;
+    this.count = 0;
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -13,6 +14,8 @@ class Store {
    * @returns {Function} Функция отписки
    */
   subscribe(listener) {
+    this.count = this.state.list.length;
+
     this.listeners.push(listener);
     // Возвращается функция для удаления добавленного слушателя
     return () => {
@@ -38,14 +41,16 @@ class Store {
     for (const listener of this.listeners) listener();
   }
 
-  /**
+  /**,
    * Добавление новой записи
    */
   addItem() {
+    this.count = this.count + 1;
+
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code: this.state.list.length + 1, title: 'Новая запись'}]
-    })
+      list: [...this.state.list, {code: this.count, title: 'Новая запись'}]
+    });
   };
 
   /**
@@ -67,8 +72,17 @@ class Store {
     this.setState({
       ...this.state,
       list: this.state.list.map(item => {
-        if (item.code === code) {
+        if (item.code === code ){
           item.selected = !item.selected;
+          if (item.selected){
+            if(item.counter){
+              item.counter += 1
+            }else {
+              item.counter = 1
+            }
+          }
+        } else {
+          item.selected = false;
         }
         return item;
       })
