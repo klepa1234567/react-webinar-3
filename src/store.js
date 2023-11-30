@@ -1,4 +1,3 @@
-import {generateCode} from "./utils";
 
 /**
  * Хранилище состояния приложения
@@ -7,8 +6,14 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
+    this.products = [];
+    this.price = 0;
   }
 
+  notify = () => {
+    // Вызываем всех слушателей
+    for (const listener of this.listeners) listener();
+  }
   /**
    * Подписка слушателя на изменения состояния
    * @param listener {Function}
@@ -30,59 +35,44 @@ class Store {
     return this.state;
   }
 
-  /**
-   * Установка состояния
-   * @param newState {Object}
-   */
-  setState(newState) {
-    this.state = newState;
-    // Вызываем всех слушателей
-    for (const listener of this.listeners) listener();
-  }
+  addProduct = (product) => {
+    const objProduct = this.products.find((value) =>value.code === product.code)
 
-  /**
-   * Добавление новой записи
-   */
-  addItem() {
-    this.setState({
-      ...this.state,
-      list: [...this.state.list, {code: generateCode(), title: 'Новая запись'}]
-    })
-  };
-
-  /**
-   * Удаление записи по коду
-   * @param code
-   */
-  deleteItem(code) {
-    this.setState({
-      ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter(item => item.code !== code)
-    })
-  };
-
-  /**
-   * Выделение записи по коду
-   * @param code
-   */
-  selectItem(code) {
-    this.setState({
-      ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          // Смена выделения и подсчёт
-          return {
-            ...item,
-            selected: !item.selected,
-            count: item.selected ? item.count : item.count + 1 || 1,
-          };
+    if(objProduct){
+      const arrProduct = this.products.map((value) => {
+        if(value.code === product.code){
+          return  {...value, count: value.count + 1 }
         }
-        // Сброс выделения если выделена
-        return item.selected ? {...item, selected: false} : item;
+        return value
       })
-    })
+       this.products = arrProduct;
+    } else {
+      this.products = [...this.products, {...product, count: 1}];
+    }
+
+    this.price = this.price + product.price;
+    this.notify()
   }
+
+  deleteProduct = (product) => {
+    this.price = this.price - product.price;
+
+    if(product.count === 1){
+      const arrFilter = this.products.filter((value) =>  value.code !== product.code )
+      this.products = arrFilter
+    } else {
+      const newProducts = this.products.map((value) => {
+        if(value.code === product.code){
+          return {...value, count: value.count - 1}
+        }
+        return value
+      })
+      this.products = newProducts;
+    }
+
+    this.notify()
+  }
+
 }
 
 export default Store;
