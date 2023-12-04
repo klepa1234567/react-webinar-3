@@ -5,7 +5,7 @@ import {formatMoney} from "../../utils";
 
 function Item({item,addProduct}) {
   const onclick = () => {
-    addProduct(item)
+    addProduct(item.code)
   }
 
   return (

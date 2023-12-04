@@ -21,7 +21,7 @@ function ModalItem({ products,deleteProduct}) {
                 <div className='Item-actions'>
                   <p className='Item-price'>{formatMoney(value.price)} ₽</p>
                   <p className='Item-count' >{value.count} шт</p>
-                  <button onClick={ () => deleteProduct(value)}>
+                  <button onClick={ () => deleteProduct(value.code)}>
                     Удалить
                   </button>
                 </div>
@@ -35,7 +35,10 @@ function ModalItem({ products,deleteProduct}) {
 
 ModalItem.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape({
-    code: PropTypes.number
+    code: PropTypes.number,
+    title: PropTypes.string,
+    selected: PropTypes.bool,
+    count: PropTypes.number
   })).isRequired,
   deleteProduct: PropTypes.func.isRequired,
 };

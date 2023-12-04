@@ -1,3 +1,4 @@
+import {element, number} from "prop-types";
 
 /**
  * Хранилище состояния приложения
@@ -8,6 +9,7 @@ class Store {
     this.listeners = []; // Слушатели изменений состояния
     this.products = [];
     this.price = 0;
+    this.count = 0;
   }
 
   notify = () => {
@@ -35,34 +37,36 @@ class Store {
     return this.state;
   }
 
-  addProduct = (product) => {
-    const objProduct = this.products.find((value) =>value.code === product.code)
+  addProduct = (code) => {
+    const thereProductCart = this.products.find((value) => value.code === code)
+    const matchingElement = this.state.list.find((element) => element.code === code)
 
-    if(objProduct){
+    if(thereProductCart){
       const arrProduct = this.products.map((value) => {
-        if(value.code === product.code){
+        if(value.code === code){
           return  {...value, count: value.count + 1 }
         }
         return value
       })
        this.products = arrProduct;
     } else {
-      this.products = [...this.products, {...product, count: 1}];
+      this.products = [...this.products, {...matchingElement, count: 1}];
     }
-
-    this.price = this.price + product.price;
+    this.price = this.price + matchingElement.price;
+    this.count = this.count + 1;
     this.notify()
   }
 
-  deleteProduct = (product) => {
-    this.price = this.price - product.price;
-
-    if(product.count === 1){
-      const arrFilter = this.products.filter((value) =>  value.code !== product.code )
+  deleteProduct = (code) => {
+    const thereProductCart = this.products.find((value) => value.code === code)
+    this.price = this.price - thereProductCart.price;
+    this.count = this.count - 1;
+    if(thereProductCart.count === 1){
+      const arrFilter = this.products.filter((value) =>  value.code !== thereProductCart.code )
       this.products = arrFilter
     } else {
       const newProducts = this.products.map((value) => {
-        if(value.code === product.code){
+        if(value.code === thereProductCart.code){
           return {...value, count: value.count - 1}
         }
         return value

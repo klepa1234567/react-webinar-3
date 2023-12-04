@@ -17,16 +17,12 @@ function List({list, addProduct}) {
 
 List.propTypes = {
   list: PropTypes.arrayOf(PropTypes.shape({
-    code: PropTypes.number
+    code: PropTypes.number,
+    title: PropTypes.string,
+    selected: PropTypes.bool,
+    count: PropTypes.number
   })).isRequired,
   addProduct: PropTypes.func.isRequired
 };
 
 export default React.memo(List);
-
-
-
-
-
-
-

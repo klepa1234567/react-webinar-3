@@ -2,16 +2,13 @@ import React from "react"
 import './style.css';
 import ModalItem from "../item/modalItem";
 import {formatMoney} from "../../utils";
+import Modal from "../../ui/modal";
+import PropTypes from "prop-types";
 
-function Modal({closeModal, products,deleteProduct, price}){
+function CartModal({closeModal, products,deleteProduct, price}){
   return(
-    <div className='block'>
-     <div className='informationBlock' >
-        <div className='modalHeader'>
-          <h2 className='headerTitle' >Корзина</h2>
-          <button onClick={closeModal}>Закрыть</button>
-        </div>
-       <ModalItem deleteProduct={deleteProduct} products={products} />
+   <Modal closeModal={closeModal} title='Корзина'>
+       <ModalItem  deleteProduct={deleteProduct} products={products} />
        {products.length === 0? (
          <p className='noProducts' >Добавьте товар</p>
        ): (
@@ -20,10 +17,20 @@ function Modal({closeModal, products,deleteProduct, price}){
            <div className='finalPrice'>{formatMoney(price)} ₽</div>
          </div>
        )}
-     </div>
-      <div onClick={closeModal} className='blockBackground' />
-    </div>
+   </Modal>
   )
 }
 
-export default Modal;
+CartModal.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  deleteProduct: PropTypes.func.isRequired,
+  price: PropTypes.number.isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape({
+    code: PropTypes.number,
+    title: PropTypes.string,
+    selected: PropTypes.bool,
+    count: PropTypes.number
+  })).isRequired,
+}
+
+export default CartModal;
