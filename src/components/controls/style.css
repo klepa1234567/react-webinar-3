@@ -3,13 +3,18 @@ button{
   height: 21px;
 }
 
-.Controls {
+.controls {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding: 20px;
   border-bottom: 1px dashed #ccc;
 }
+.controls > p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .price{
   margin-left: 15px;
   margin-right: 20px;

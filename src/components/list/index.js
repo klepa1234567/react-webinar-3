@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import Item from "../item/mainItem";
+import Item from "../item/main-item";
 import './style.css';
 
 function List({list, addProduct}) {

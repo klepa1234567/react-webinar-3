@@ -8,11 +8,13 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-top: 20px;
+  padding-bottom: 30px;
 }
 
 .finalText {
   font-weight: 900;
-  margin-right: 40px;
+  margin: 0 40px 0 0;
 }
 
 .finalPrice {

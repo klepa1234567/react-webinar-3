@@ -52,31 +52,27 @@ class Store {
     } else {
       this.products = [...this.products, {...matchingElement, count: 1}];
     }
+
+    this.count = this.products.length;
     this.price = this.price + matchingElement.price;
-    this.count = this.count + 1;
     this.notify()
   }
 
   deleteProduct = (code) => {
-    const thereProductCart = this.products.find((value) => value.code === code)
-    this.price = this.price - thereProductCart.price;
-    this.count = this.count - 1;
-    if(thereProductCart.count === 1){
-      const arrFilter = this.products.filter((value) =>  value.code !== thereProductCart.code )
-      this.products = arrFilter
-    } else {
-      const newProducts = this.products.map((value) => {
-        if(value.code === thereProductCart.code){
-          return {...value, count: value.count - 1}
-        }
-        return value
-      })
-      this.products = newProducts;
-    }
+    this.products = this.products.filter((value) =>  value.code !== code )
+    this.count = this.products.length;
 
+    this.recalculatePrice()
     this.notify()
   }
 
+  recalculatePrice = () => {
+    this.price = 0;
+
+    this.products.forEach((product) => {
+      this.price += product.price
+    });
+  }
 }
 
 export default Store;

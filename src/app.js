@@ -22,7 +22,6 @@ function App({store}) {
       <Controls
         openModal={openModal}
         price={store.price}
-        products={store.products}
         counter={store.count}
       />
       <List addProduct={store.addProduct}  list={list} />

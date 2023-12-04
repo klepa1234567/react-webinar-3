@@ -1,6 +1,6 @@
 import React from "react"
 import './style.css';
-import ModalItem from "../item/modalItem";
+import ModalItem from "../item/modal-item";
 import {formatMoney} from "../../utils";
 import Modal from "../../ui/modal";
 import PropTypes from "prop-types";
