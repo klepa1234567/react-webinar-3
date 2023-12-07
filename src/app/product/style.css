@@ -1,0 +1,21 @@
+.productWrapper {
+  padding: 41px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.productWrapper * {
+  margin: 0;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+}
+
+.productPrice {
+  font-size: 24px;
+}
+
+.productButton {
+  font-size: 13px;
+}

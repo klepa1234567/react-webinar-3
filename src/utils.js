@@ -33,3 +33,35 @@ export function codeGenerator(start = 0) {
 export function numberFormat(value, locale = 'ru-RU', options = {}) {
   return new Intl.NumberFormat(locale, options).format(value);
 }
+
+export function generatePagination(currentPage, totalPages) {
+  const pagination = [];
+
+  if (totalPages <= 5) {
+    for (let i = 1; i <= totalPages; i++) {
+      pagination.push(i.toString());
+    }
+  } else {
+    pagination.push('1');
+
+    if (currentPage < 3) {
+      pagination.push('2', '3', '...', totalPages.toString());
+    } else if (currentPage > totalPages - 3) {
+      pagination.push('...', (totalPages - 3).toString());
+      for (let i = totalPages - 2; i <= totalPages; i++) {
+        pagination.push(i.toString());
+      }
+    } else {
+      pagination.push(
+        '...',
+        (currentPage - 1).toString(),
+        currentPage.toString(),
+        (currentPage + 1).toString(),
+        '...',
+        totalPages.toString(),
+      );
+    }
+  }
+
+  return pagination;
+}

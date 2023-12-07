@@ -32,3 +32,12 @@
   white-space: nowrap;
   font-size: 18px;
 }
+
+.listItem {
+  color: black;
+  text-decoration: none;
+}
+
+.listItem:hover {
+  text-decoration: underline;
+}

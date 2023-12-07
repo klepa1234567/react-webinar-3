@@ -1,0 +1,19 @@
+.paginationButton {
+  background: none;
+  border: none;
+}
+
+.paginationButton:hover {
+  background: #E1E1E1;
+}
+
+.activePaginationButton {
+  background: #0087E9;
+  color: white;
+}
+
+.paginationBlock {
+  display: flex;
+  justify-content: flex-end;
+  padding: 25px;
+}
